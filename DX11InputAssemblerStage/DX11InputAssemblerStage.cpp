@@ -2,9 +2,13 @@
 //
 
 #include "stdafx.h"
+#include "DX11App.h"
 
 
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+
+void InitDX11(HWND hWnd);
+void ClearDX11();
 
 
 int WINAPI WinMain(HINSTANCE hInstance,
@@ -46,6 +50,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
     ShowWindow(hWnd, nShowCmd);
 
 		//Init D3D
+		DX11App* pApp = new DX11App();
+		pApp->Init(hWnd);
 
 		//Main loop
 		MSG msg;
@@ -69,6 +75,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
     }
 
 		//Clean
+		pApp->Clean();
+		delete pApp;
 
     return msg.wParam;
 }
@@ -86,3 +94,6 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 
     return DefWindowProc (hWnd, message, wParam, lParam);
 }
+
+
+
