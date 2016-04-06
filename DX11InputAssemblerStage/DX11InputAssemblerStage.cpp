@@ -51,7 +51,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 		//Init D3D
 		DX11App* pApp = new DX11App();
-		pApp->Init(hWnd);
+		pApp->Init(&hWnd);
 
 		//Main loop
 		MSG msg;
@@ -66,17 +66,13 @@ int WINAPI WinMain(HINSTANCE hInstance,
             if(msg.message == WM_QUIT)
                 break;
         }
-        else
-        {
-            // Run game code here
-            // ...
-            // ...
-        }
+        
+				pApp->RenderFrame();
     }
 
 		//Clean
 		pApp->Clean();
-		delete pApp;
+		//delete pApp;
 
     return msg.wParam;
 }
