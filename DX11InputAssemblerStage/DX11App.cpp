@@ -27,11 +27,14 @@ void DX11App::Init(HWND* in_Wnd)
 	SecureZeroMemory(&scd, sizeof(DXGI_SWAP_CHAIN_DESC));
 
 	scd.BufferCount = 1;                                    
-	scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;     
+	scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	scd.BufferDesc.Height = GetHeight();
+	scd.BufferDesc.Width = GetWidth();
 	scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;      
 	scd.OutputWindow = *in_Wnd;                                
-	scd.SampleDesc.Count = 4;                               
-	scd.Windowed = TRUE;                               //Windows is temp
+	scd.SampleDesc.Count = 1;
+	scd.Windowed = TRUE;                               
+	scd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
 	// create a device, device context and swap chain using the information in the scd struct
 	hr = D3D11CreateDeviceAndSwapChain(NULL,
@@ -53,6 +56,8 @@ void DX11App::Init(HWND* in_Wnd)
 
 void DX11App::Clean()
 {
+	//m_pSwapChain->SetFullscreenState(false, NULL);
+
 	m_pSwapChain->Release();
 	m_pBackBuffer->Release();
 	m_pDevice->Release();
@@ -85,8 +90,8 @@ void DX11App::InitBackBuffer(){	// get the address of the back buffer
 
 	viewport.TopLeftX = 0;
 	viewport.TopLeftY = 0;
-	viewport.Width = m_nWidth;
-	viewport.Height = m_nHeight;
+	viewport.Width = GetWidth();
+	viewport.Height = GetHeight();
 
 	m_pDeviceContext->RSSetViewports(1, &viewport);}
 

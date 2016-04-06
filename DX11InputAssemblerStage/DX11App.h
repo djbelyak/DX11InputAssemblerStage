@@ -11,6 +11,9 @@ public:
 	void RenderFrame();
 	void Clean();
 
+	size_t GetWidth() const {return m_nWidth;}
+	size_t GetHeight() const {return m_nHeight;}
+
 protected:
 	void InitBackBuffer();
 	void SetViewPort();
