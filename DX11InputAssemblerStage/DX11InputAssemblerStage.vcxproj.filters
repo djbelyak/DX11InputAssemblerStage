@@ -39,4 +39,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader.shader">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>
