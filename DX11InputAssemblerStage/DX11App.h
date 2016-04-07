@@ -24,9 +24,9 @@ public:
 	DX11App();
 	virtual ~DX11App(void);
 
-	void Init(HWND* in_Wnd);
+	virtual void Init(HWND* in_Wnd);
 	virtual void RenderFrame() = 0;
-	void Clean();
+	virtual void Clean();
 
 	size_t GetWidth() const {return m_nWidth;}
 	size_t GetHeight() const {return m_nHeight;}

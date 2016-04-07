@@ -30,6 +30,9 @@
     <ClInclude Include="DrawDX11App.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DrawIndexedDX11App.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -42,6 +45,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DrawDX11App.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawIndexedDX11App.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

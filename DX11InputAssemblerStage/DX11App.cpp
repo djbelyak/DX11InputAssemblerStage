@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "DrawDX11App.h"
+#include "DrawIndexedDX11App.h"
 #include "DX11App.h"
 
 
@@ -25,7 +26,14 @@ DX11App::~DX11App(void)
 
 DX11App* DX11App::MakeDX11App(eAppType in_type)
 {
-  return new DrawDX11App();
+  switch (in_type)
+  {
+  case Draw: 
+    return new DrawDX11App();
+  case DrawIndexed:
+    return new DrawIndexedDX11App();
+  }
+  
 }
 
 void DX11App::Init(HWND* in_Wnd)
