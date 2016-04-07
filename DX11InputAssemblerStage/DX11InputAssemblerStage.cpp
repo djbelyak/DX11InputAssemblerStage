@@ -17,7 +17,13 @@ int WINAPI WinMain(HINSTANCE hInstance,
 									 int nShowCmd)
 {
 
-	DX11App* pApp = new DX11App();
+  LPWSTR *szArgList;
+  int argCount;
+  szArgList = CommandLineToArgvW(GetCommandLine(), &argCount);
+
+  DX11App* pApp = DX11App::MakeDX11App(GetAppType(&szArgList[1]));
+  LocalFree(szArgList);
+
 	HWND hWnd;
 	WNDCLASSEX wc;
 

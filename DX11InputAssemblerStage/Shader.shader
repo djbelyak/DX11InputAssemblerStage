@@ -17,11 +17,11 @@ VOut VShader(float4 position : POSITION, float4 color : COLOR)
 
 float4 PShader(float4 position : SV_POSITION, float4 color : COLOR) : SV_TARGET
 {
-	if (position.x < 100.0f)
+	if (position.x < 1.0f)
 	{
 		float mult = 0.9f;
 		float4 res = color;
-		for (int i=0; i<100000; i++)
+		for (int i=0; i<1; i++)
 		{
 			res = res*mult;
 		}

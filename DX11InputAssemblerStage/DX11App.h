@@ -7,14 +7,25 @@ struct VERTEX
 	D3DXCOLOR Color;   
 };
 
+enum eAppType {
+  Draw,
+  DrawInstanced,
+  DrawIndexed,
+  DrawIndexedInstanced,
+  DrawAuto
+};
+
+eAppType GetAppType(LPWSTR* argList);
+
 class DX11App
 {
 public:
+  static DX11App* MakeDX11App(eAppType in_type);
 	DX11App();
 	virtual ~DX11App(void);
 
 	void Init(HWND* in_Wnd);
-	void RenderFrame();
+	virtual void RenderFrame() = 0;
 	void Clean();
 
 	size_t GetWidth() const {return m_nWidth;}
@@ -23,8 +34,8 @@ public:
 protected:
 	void InitBackBuffer();
 	void SetViewPort();
-	void LoadShaders();
-	void CreateVertexBuffer();
+	virtual void LoadShaders() = 0;
+	virtual void CreateVertexBuffer() = 0;
 
 
 protected:

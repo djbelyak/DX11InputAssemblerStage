@@ -1,12 +1,17 @@
 #include "stdafx.h"
+#include "DrawDX11App.h"
 #include "DX11App.h"
 
 
+
+
 DX11App::DX11App():
-	m_nHeight(600),
-	m_nWidth(800)
+	m_nHeight(1200),
+	m_nWidth(1920)
 {
 }
+
+
 
 
 DX11App::~DX11App(void)
@@ -16,6 +21,11 @@ DX11App::~DX11App(void)
 	delete m_pSwapChain;
 	delete m_pDevice;
 	delete m_pDeviceContext;
+}
+
+DX11App* DX11App::MakeDX11App(eAppType in_type)
+{
+  return new DrawDX11App();
 }
 
 void DX11App::Init(HWND* in_Wnd)
@@ -71,27 +81,6 @@ void DX11App::Clean()
 	m_pDeviceContext->Release();
 }
 
-void DX11App::RenderFrame()
-{
-	// clear the back buffer to a deep blue
-	float clearColor[4] = {0.0f, 0.2f, 0.4f, 1.0f};
-	m_pDeviceContext->ClearRenderTargetView(m_pBackBuffer, clearColor)	;
-
-	
-	UINT elementSize = sizeof(VERTEX);
-	UINT offset = 0;
-	m_pDeviceContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &elementSize, &offset);
-	m_pDeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	m_pDeviceContext->Draw(12,0);
-
-
-
-
-	// switch the back buffer and the front buffer
-	m_pSwapChain->Present(0, 0);
-}
-
 void DX11App::InitBackBuffer()
 {
 	// get the address of the back buffer
@@ -119,66 +108,15 @@ void DX11App::SetViewPort()
 	m_pDeviceContext->RSSetViewports(1, &viewport);
 }
 
-void DX11App::LoadShaders()
+eAppType GetAppType(LPWSTR* argList)
 {
-	ID3D10Blob *VS, *PS;
-	D3DX11CompileFromFile(L"Shader.shader", 0, 0, "VShader", "vs_4_0", 0, 0, 0, &VS, 0, 0);
-	D3DX11CompileFromFile(L"Shader.shader", 0, 0, "PShader", "ps_4_0", 0, 0, 0, &PS, 0, 0);
-
-	m_pDevice->CreateVertexShader(VS->GetBufferPointer(), VS->GetBufferSize(), NULL, &m_pVS);
-	m_pDevice->CreatePixelShader(PS->GetBufferPointer(), PS->GetBufferSize(), NULL, &m_pPS);
-
-	m_pDeviceContext->VSSetShader(m_pVS, 0, 0);
-	m_pDeviceContext->PSSetShader(m_pPS, 0, 0);
-
-	D3D11_INPUT_ELEMENT_DESC ied[] = 
-	{
-		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-		{"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0},
-	};
-
-	m_pDevice->CreateInputLayout(ied, 2, VS->GetBufferPointer(), VS->GetBufferSize(), &m_pLayout);
-	m_pDeviceContext->IASetInputLayout(m_pLayout);
+  if (wcscmp(*argList, L"DrawInstanced") == 0)
+    return DrawInstanced;
+  if (wcscmp(*argList, L"DrawIndexed") == 0)
+    return DrawIndexed;
+  if (wcscmp(*argList, L"DrawIndexedInstanced") == 0)
+    return DrawIndexedInstanced;
+  if (wcscmp(*argList, L"DrawAuto") == 0)
+    return DrawAuto;
+  return Draw;
 }
-
-void DX11App::CreateVertexBuffer()
-{
-	VERTEX OurVertices[] =
-	{
-		{-1.0f, -1.0f, 0.0f, D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f)},
-		{-0.5f, 0.0f, 0.0f, D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f)},
-		{0.0f, -1.0f, 0.0f, D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f)},
-		{0.0f, -1.0f, 0.0f, D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f)},
-		{0.5f, 0.0f, 0.0f, D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f)},
-		{1.0f, -1.0f, 0.0f, D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f)},
-		{-1.0f, 0.0f, 0.0f, D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f)},
-		{-0.5f, 1.0f, 0.0f, D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f)},
-		{0.0f, 0.0f, 0.0f, D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f)},
-		{0.0f, 0.0f, 0.0f, D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f)},
-		{0.5f, 1.0f, 0.0f, D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f)},
-		{1.0f, 0.0f, 0.0f, D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f)},
-	};
-
-	D3D11_BUFFER_DESC bd;
-	ZeroMemory(&bd, sizeof(bd));
-
-	bd.Usage = D3D11_USAGE_DEFAULT;
-	bd.ByteWidth = sizeof(OurVertices);
-	bd.BindFlags        = D3D11_BIND_VERTEX_BUFFER;
-	bd.CPUAccessFlags   = 0;
-	bd.MiscFlags        = 0;
-
-
-	D3D11_SUBRESOURCE_DATA InitData;
-	InitData.pSysMem = OurVertices;
-	InitData.SysMemPitch = 0;
-	InitData.SysMemSlicePitch = 0;
-
-	HRESULT hr = S_OK;
-	hr = m_pDevice->CreateBuffer(&bd, &InitData, &m_pVertexBuffer);
-
-}
-
-
-
-
