@@ -149,13 +149,16 @@
   <ItemGroup>
     <ClInclude Include="DrawDX11App.h" />
     <ClInclude Include="DrawIndexedDX11App.h" />
+    <ClInclude Include="DrawInstancedDX11App.h" />
     <ClInclude Include="DX11App.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DrawDX11App.cpp" />
     <ClCompile Include="DrawIndexedDX11App.cpp" />
+    <ClCompile Include="DrawInstancedDX11App.cpp" />
     <ClCompile Include="DX11App.cpp" />
     <ClCompile Include="DX11InputAssemblerStage.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -166,6 +169,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="InstanceShader.shader" />
     <None Include="Shader.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

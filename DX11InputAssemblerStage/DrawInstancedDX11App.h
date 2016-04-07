@@ -1,11 +1,11 @@
 #pragma once
 #include "dx11app.h"
-class DrawIndexedDX11App :
+class DrawInstancedDX11App :
   public DX11App
 {
 public:
-  DrawIndexedDX11App(void);
-  ~DrawIndexedDX11App(void);
+  DrawInstancedDX11App(void);
+  ~DrawInstancedDX11App(void);
 
   void RenderFrame();
   void Clean();
@@ -15,6 +15,6 @@ protected:
   void LoadShaders();
   void CreateVertexBuffer();
 
-  ID3D11Buffer* m_pIndexBuffer;
+  ID3D11Buffer* m_pInstanceBuffer;
 };
 

@@ -11,12 +11,6 @@ DrawIndexedDX11App::~DrawIndexedDX11App(void)
 {
 }
 
-void DrawIndexedDX11App::Init(HWND* in_Wnd)
-{
-  DX11App::Init(in_Wnd);
-
-
-}
 
 void DrawIndexedDX11App::Clean()
 {
@@ -114,7 +108,7 @@ void DrawIndexedDX11App::CreateVertexBuffer()
   ZeroMemory(&bd, sizeof(bd));
 
   bd.Usage = D3D11_USAGE_DEFAULT;
-  bd.ByteWidth = (sizeof(VERTEX)+1)*sizeof(OurVertices)/sizeof(VERTEX);
+  bd.ByteWidth = sizeof(OurVertices);
   bd.BindFlags        = D3D11_BIND_VERTEX_BUFFER;
   bd.CPUAccessFlags   = 0;
   bd.MiscFlags        = 0;

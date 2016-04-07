@@ -33,6 +33,12 @@
     <ClInclude Include="DrawIndexedDX11App.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DrawInstancedDX11App.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -50,9 +56,15 @@
     <ClCompile Include="DrawIndexedDX11App.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DrawInstancedDX11App.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader.shader">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="InstanceShader.shader">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
